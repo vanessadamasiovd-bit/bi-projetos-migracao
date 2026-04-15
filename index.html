@@ -1,4 +1,4 @@
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -98,7 +98,7 @@ tr:hover{background:#f8f9ff}
 </head>
 <body>
 
-<\!-- TELA DE LOGIN -->
+<!-- TELA DE LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">GS</div>
@@ -112,7 +112,7 @@ tr:hover{background:#f8f9ff}
   </div>
 </div>
 
-<\!-- CONTEUDO DO APP -->
+<!-- CONTEUDO DO APP -->
 <div id="app-content">
 
 <div class="header">
@@ -204,7 +204,7 @@ tr:hover{background:#f8f9ff}
   </div>
 </div>
 
-</div><\!-- end app-content -->
+</div><!-- end app-content -->
 
 <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
@@ -258,11 +258,11 @@ let currentPage = 1;
 const PAGE_SIZE = 25;
 let activeQuarter = 'all';
 
-function getQuarter(ds){if(\!ds||ds==='Nao informado')return null;const m=new Date(ds).getMonth();if(m<3)return'Q1';if(m<6)return'Q2';if(m<9)return'Q3';return'Q4';}
-function getYear(ds){if(\!ds||ds==='Nao informado')return null;return new Date(ds).getFullYear();}
-function isOverdue(p){if(\!p.end_date||p.end_date==='Nao informado'||p.is_completed)return false;if(p.status_name==='Conclu\u00eddo'||p.status_name==='Cancelado')return false;return new Date(p.end_date)<TODAY;}
-function formatDate(d){if(\!d||d==='Nao informado')return'-';try{return new Date(d).toLocaleDateString('pt-BR');}catch(e){return d;}}
-function getStatusClass(s){if(\!s)return'';const l=s.toLowerCase();if(l.includes('andamento'))return'status-em-andamento';if(l.includes('conclu'))return'status-concluido';if(l.includes('cancel'))return'status-cancelado';if(l.includes('novo'))return'status-novo';if(l.includes('pend')||l.includes('migra'))return'status-pendente';if(l.includes('pausa'))return'status-pausa';return'';}
+function getQuarter(ds){if(!ds||ds==='Nao informado')return null;const m=new Date(ds).getMonth();if(m<3)return'Q1';if(m<6)return'Q2';if(m<9)return'Q3';return'Q4';}
+function getYear(ds){if(!ds||ds==='Nao informado')return null;return new Date(ds).getFullYear();}
+function isOverdue(p){if(!p.end_date||p.end_date==='Nao informado'||p.is_completed)return false;if(p.status_name==='Conclu\u00eddo'||p.status_name==='Cancelado')return false;return new Date(p.end_date)<TODAY;}
+function formatDate(d){if(!d||d==='Nao informado')return'-';try{return new Date(d).toLocaleDateString('pt-BR');}catch(e){return d;}}
+function getStatusClass(s){if(!s)return'';const l=s.toLowerCase();if(l.includes('andamento'))return'status-em-andamento';if(l.includes('conclu'))return'status-concluido';if(l.includes('cancel'))return'status-cancelado';if(l.includes('novo'))return'status-novo';if(l.includes('pend')||l.includes('migra'))return'status-pendente';if(l.includes('pausa'))return'status-pausa';return'';}
 function projectUrl(id){return PORTAL_URL+'#kanbanview/'+id;}
 
 function initFilters(){
@@ -279,13 +279,13 @@ function clearFilters(){document.getElementById('filterYear').value='all';docume
 function applyFilters(){
   const year=document.getElementById('filterYear').value,df=document.getElementById('filterDateFrom').value,dt=document.getElementById('filterDateTo').value,group=document.getElementById('filterGroup').value,status=document.getElementById('filterStatus').value,owner=document.getElementById('filterOwner').value;
   filteredData=PROJECTS_DATA.filter(p=>{
-    if(year\!=='all'){const y=getYear(p.start_date);if(\!y||y\!==parseInt(year))return false;}
-    if(activeQuarter\!=='all'){const q=getQuarter(p.start_date);if(q\!==activeQuarter)return false;}
-    if(df&&p.start_date&&p.start_date\!=='Nao informado'){if(p.start_date<df)return false;}
-    if(dt&&p.start_date&&p.start_date\!=='Nao informado'){if(p.start_date>dt)return false;}
-    if(group\!=='all'&&p.group_name\!==group)return false;
-    if(status\!=='all'&&p.status_name\!==status)return false;
-    if(owner\!=='all'&&p.owner\!==owner)return false;
+    if(year!=='all'){const y=getYear(p.start_date);if(!y||y!==parseInt(year))return false;}
+    if(activeQuarter!=='all'){const q=getQuarter(p.start_date);if(q!==activeQuarter)return false;}
+    if(df&&p.start_date&&p.start_date!=='Nao informado'){if(p.start_date<df)return false;}
+    if(dt&&p.start_date&&p.start_date!=='Nao informado'){if(p.start_date>dt)return false;}
+    if(group!=='all'&&p.group_name!==group)return false;
+    if(status!=='all'&&p.status_name!==status)return false;
+    if(owner!=='all'&&p.owner!==owner)return false;
     return true;
   });
   currentPage=1;render();
@@ -323,7 +323,7 @@ function filterAndShow(chart,value){
 
 function showModal(title,items){
   document.getElementById('modalTitle').textContent=title;
-  if(\!items.length){document.getElementById('modalBody').innerHTML='<div class="empty-state">Nenhum projeto encontrado</div>';}
+  if(!items.length){document.getElementById('modalBody').innerHTML='<div class="empty-state">Nenhum projeto encontrado</div>';}
   else{
     let h='<table><thead><tr><th>Projeto</th><th>Proprietario</th><th>Status</th><th>Inicio</th><th>Termino</th><th>Atraso</th></tr></thead><tbody>';
     items.forEach(p=>{const od=isOverdue(p);h+=`<tr><td><a href="${projectUrl(p.id)}" target="_blank" class="link-projeto">${p.name}</a></td><td>${p.owner}</td><td><span class="status-badge ${getStatusClass(p.status_name)}">${p.status_name}</span></td><td>${formatDate(p.start_date)}</td><td>${formatDate(p.end_date)}</td><td class="${od?'atraso-sim':'atraso-nao'}">${od?'Sim':'Nao'}</td></tr>`;});
@@ -334,7 +334,7 @@ function showModal(title,items){
 
 function closeModal(){document.getElementById('modalOverlay').classList.remove('show');}
 
-function sortTable(field){if(currentSort.field===field)currentSort.asc=\!currentSort.asc;else{currentSort.field=field;currentSort.asc=true;}render();}
+function sortTable(field){if(currentSort.field===field)currentSort.asc=!currentSort.asc;else{currentSort.field=field;currentSort.asc=true;}render();}
 
 function renderTable(){
   const sorted=[...filteredData].sort((a,b)=>{let va=a[currentSort.field]||'',vb=b[currentSort.field]||'';if(currentSort.field==='atraso'){va=isOverdue(a)?1:0;vb=isOverdue(b)?1:0;}if(currentSort.field==='percent_complete'){va=parseFloat(va)||0;vb=parseFloat(vb)||0;}if(va<vb)return currentSort.asc?-1:1;if(va>vb)return currentSort.asc?1:-1;return 0;});
